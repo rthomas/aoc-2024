@@ -3,15 +3,15 @@ use std::{collections::HashMap, error::Error, fs::read_to_string};
 fn main() -> Result<(), Box<dyn Error>> {
     let (left, right) = input()?;
 
-    part_1(left.clone(), right.clone())?;
-    part_2(left, right)?;
+    part_1(left.clone(), right.clone());
+    part_2(left, right);
 
     Ok(())
 }
 
-fn part_1(mut left: Vec<i32>, mut right: Vec<i32>) -> Result<(), Box<dyn Error>> {
-    left.sort();
-    right.sort();
+fn part_1(mut left: Vec<i32>, mut right: Vec<i32>) {
+    left.sort_unstable();
+    right.sort_unstable();
 
     let acc = left
         .iter()
@@ -19,11 +19,9 @@ fn part_1(mut left: Vec<i32>, mut right: Vec<i32>) -> Result<(), Box<dyn Error>>
         .fold(0, |acc, (i, j)| acc + i32::abs(i - j));
 
     println!("Part 1: {acc}");
-
-    Ok(())
 }
 
-fn part_2(left: Vec<i32>, right: Vec<i32>) -> Result<(), Box<dyn Error>> {
+fn part_2(left: Vec<i32>, right: Vec<i32>) {
     let mut r_count = HashMap::new();
 
     for j in right {
@@ -35,8 +33,6 @@ fn part_2(left: Vec<i32>, right: Vec<i32>) -> Result<(), Box<dyn Error>> {
         .fold(0, |acc, i| acc + i * r_count.get(&i).unwrap_or(&0));
 
     println!("Part 2: {acc}");
-
-    Ok(())
 }
 
 fn input() -> Result<(Vec<i32>, Vec<i32>), Box<dyn Error>> {
