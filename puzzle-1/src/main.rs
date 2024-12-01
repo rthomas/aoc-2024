@@ -13,10 +13,10 @@ fn part_1(mut left: Vec<i32>, mut right: Vec<i32>) -> Result<(), Box<dyn Error>>
     left.sort();
     right.sort();
 
-    let mut acc = 0;
-    for (i, j) in left.iter().zip(right.iter()) {
-        acc += i32::abs(i - j);
-    }
+    let acc = left
+        .iter()
+        .zip(right.iter())
+        .fold(0, |acc, (i, j)| acc + i32::abs(i - j));
 
     println!("Part 1: {acc}");
 
@@ -30,10 +30,9 @@ fn part_2(left: Vec<i32>, right: Vec<i32>) -> Result<(), Box<dyn Error>> {
         *r_count.entry(j).or_insert(0) += 1;
     }
 
-    let mut acc = 0;
-    for i in left {
-        acc += i * r_count.get(&i).unwrap_or(&0);
-    }
+    let acc = left
+        .into_iter()
+        .fold(0, |acc, i| acc + i * r_count.get(&i).unwrap_or(&0));
 
     println!("Part 2: {acc}");
 
